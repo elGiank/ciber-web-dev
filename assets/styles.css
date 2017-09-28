@@ -16,3 +16,13 @@
 .login-header-img {
     height: 80px;
 }
+
+.page-not-found {
+    color: #80d7ff;
+    padding-top: 35vh;
+    font-size: 7vw;
+}
+
+.page-not-found-small {
+    color: transparent;
+}
