@@ -4,6 +4,8 @@ const INITIAL_STATE = {};
 
 export function customerReducer(state = INITIAL_STATE, action: any) {
     switch (action.type) {
+        case types.GOT_TOKEN: 
+            return {...state, token: action.token}
         case types.GOT_CUSTOMERS:
             return { ...state, customers: action.customers };                     
     }

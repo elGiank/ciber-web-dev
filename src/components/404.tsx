@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export function NotFound (){
+export default function NotFound (){
     return (
         <div className="container-fluid container-login">
             <div className="row full-height-row">
