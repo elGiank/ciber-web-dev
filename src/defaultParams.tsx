@@ -1,7 +1,8 @@
 export default function DefaultParams() {
     return {
         customerReducer: {
-            token: "" 
+            token: "",
+            customers: Array<any>()
         }
     };
 }

@@ -32,3 +32,9 @@
 .page-not-found-small {
     color: transparent;
 }
+
+.list-icon {
+    padding-right: .5rem;
+    padding-left: .5rem;
+    cursor: pointer;
+}
