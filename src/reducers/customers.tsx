@@ -10,6 +10,9 @@ export function customerReducer(state = INITIAL_STATE, action: any) {
             return { ...state, customers: action.customers };
         case types.GOT_CUSTOMER:
             return { ...state, customer: action.customer };
+        case types.USER_DELETED: 
+            hashHistory.push('/customers');
+        break;
     }
 
     return state;

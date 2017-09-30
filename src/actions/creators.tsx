@@ -90,8 +90,25 @@ export function getCustomer(token: string, customerId: string) {
         //     .then(response => {
         //         console.log(response.data);
         //         dispatch({
-        //             type: types.GOT_CUSTOMERS,
-        //             customers: response.data
+        //             type: types.GOT_CUSTOMER,
+        //             customer: response.data
+        //         });
+        //     })
+        //     .catch((error) => { console.log(error) });
+    }
+}
+
+
+export function deleteCustomer(token: string, customerId: string) {
+    return function (dispatch: any) {
+        let config = { headers: { Authorization: token }};
+            dispatch({
+                type: types.USER_DELETED
+            });
+        // axios.delete(`http://cibertecwebapi.azurewebsites.net/customer/${customerId}`, config)
+        //     .then(response => {
+        //         dispatch({
+        //             type: types.USER_DELETED,
         //         });
         //     })
         //     .catch((error) => { console.log(error) });
