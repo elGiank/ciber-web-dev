@@ -57,7 +57,7 @@ export function getCustomerList(token: string) {
                 type: types.GOT_CUSTOMERS,
                 customers: customerList
             });
-        // axios.get('http://cibertecwebapi.azurewebsites.net/customer/10', config)
+        // axios.get('http://cibertecwebapi.azurewebsites.net/customer/list?page=1&rows=25', config)
         //     .then(response => {
         //         console.log(response.data);
         //         dispatch({
@@ -69,3 +69,31 @@ export function getCustomerList(token: string) {
     }
 }
 
+export function getCustomer(token: string, customerId: string) {
+    return function (dispatch: any) {
+        let config = { headers: { Authorization: token }};
+        let fackeCustomer = 
+            {
+                "id": 10,
+                "firstName": "Elizabeth",
+                "lastName": "Lincoln",
+                "city": "Tsawassen",
+                "country": "Canada",
+                "phone": "(604) 555-4729"
+            };
+        
+            dispatch({
+                type: types.GOT_CUSTOMER,
+                customer: fackeCustomer
+            });
+        // axios.get(`http://cibertecwebapi.azurewebsites.net/customer/${customerId}`, config)
+        //     .then(response => {
+        //         console.log(response.data);
+        //         dispatch({
+        //             type: types.GOT_CUSTOMERS,
+        //             customers: response.data
+        //         });
+        //     })
+        //     .catch((error) => { console.log(error) });
+    }
+}

@@ -7,7 +7,9 @@ export function customerReducer(state = INITIAL_STATE, action: any) {
         case types.GOT_TOKEN: 
             return {...state, token: action.token}
         case types.GOT_CUSTOMERS:
-            return { ...state, customers: action.customers };                     
+            return { ...state, customers: action.customers };
+        case types.GOT_CUSTOMER:
+            return { ...state, customer: action.customer };
     }
 
     return state;

@@ -2,6 +2,8 @@ import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { getCustomerList } from '../actions/creators';
+import { hashHistory } from 'react-router';
+import { Link } from 'react-router';
 
 interface ICustomerListProps extends React.Props<any>{
     token?: string,
@@ -28,7 +30,6 @@ class CustomerList extends React.Component<any,any> {
     }
 
     componentDidMount(){
-        console.log(this.props.token);
         this.props.localGetCustomerList(this.props.token);
     }
 
@@ -63,9 +64,8 @@ class CustomerList extends React.Component<any,any> {
                                                 <td>{item.country}</td>
                                                 <td>{item.phone}</td>
                                                 <td>
-                                                <span className="glyphicon glyphicon-eye-open list-icon text-primary"></span>
-                                                <span className="glyphicon glyphicon-pencil list-icon text-primary"></span>
-                                                <span className="glyphicon glyphicon-trash list-icon text-primary"></span>
+                                                    <Link to={`/customerview/${item.id}`}><span className="glyphicon glyphicon-eye-open list-icon text-primary"></span></Link>
+                                                    <Link to={`/customeredit/${item.id}`}><span className="glyphicon glyphicon-pencil list-icon text-primary"></span></Link>
                                                 </td>
                                             </tr>
                                         })}
@@ -82,6 +82,7 @@ class CustomerList extends React.Component<any,any> {
             </div>
         </div>;
     };
+
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CustomerList);

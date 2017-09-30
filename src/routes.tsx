@@ -9,6 +9,7 @@ import DefaultParams from './defaultParams';
 import Login from "./components/Login";
 import NotFound from "./components/404";
 import CustomerList from "./components/CustomerList";
+import CustomerDisplay from "./components/CustomerDisplay";
 
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
@@ -21,6 +22,7 @@ export class CustomersApp extends React.Component<any, any> {
                 <Router history={hashHistory}>
                     <Route path="/" component={Login}/>
                     <Route path="/customers" component={CustomerList}/>
+                    <Route path="/customerview/:id" component={CustomerDisplay}/>
                     <Route path="*" component={NotFound} />
                 </Router>
             </Provider>
