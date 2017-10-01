@@ -25,92 +25,94 @@ export function loginUser(email: string, password: string) {
 
 export function getCustomerList(token: string) {
     return function (dispatch: any) {
-        let config = { headers: { Authorization: token }};
-        let customerList = [
-            {
-                "id": 10,
-                "firstName": "Elizabeth",
-                "lastName": "Lincoln",
-                "city": "Tsawassen",
-                "country": "Canada",
-                "phone": "(604) 555-4729"
-            },
-            {
-                "id": 20,
-                "firstName": "Gian Carlo",
-                "lastName": "Vegas R.",
-                "city": "Tsawassen",
-                "country": "Canada",
-                "phone": "(604) 555-4729"
-            },
-            {
-                "id": 30,
-                "firstName": "Cesar",
-                "lastName": "Velarde",
-                "city": "Kansas",
-                "country": "USA",
-                "phone": "(554) 555-4729"
-            },  
-        ];
+        let config = { headers: { Authorization: `Bearer ${token}` }};
         
-            dispatch({
-                type: types.GOT_CUSTOMERS,
-                customers: customerList
-            });
-        // axios.get('http://cibertecwebapi.azurewebsites.net/customer/list?page=1&rows=25', config)
-        //     .then(response => {
-        //         console.log(response.data);
-        //         dispatch({
-        //             type: types.GOT_CUSTOMERS,
-        //             customers: response.data
-        //         });
-        //     })
-        //     .catch((error) => { console.log(error) });
+        axios.get('http://cibertecwebapi.azurewebsites.net/customer/list?page=1&rows=15', config)
+            .then(response => {
+                console.log(response.data);
+                dispatch({
+                    type: types.GOT_CUSTOMERS,
+                    customers: response.data
+                });
+            })
+            .catch((error) => { console.log(error) });
     }
 }
 
 export function getCustomer(token: string, customerId: string) {
     return function (dispatch: any) {
-        let config = { headers: { Authorization: token }};
-        let fackeCustomer = 
-            {
-                "id": 10,
-                "firstName": "Elizabeth",
-                "lastName": "Lincoln",
-                "city": "Tsawassen",
-                "country": "Canada",
-                "phone": "(604) 555-4729"
-            };
+        let config = { headers: { Authorization: `Bearer ${token}` }};
         
-            dispatch({
-                type: types.GOT_CUSTOMER,
-                customer: fackeCustomer
-            });
-        // axios.get(`http://cibertecwebapi.azurewebsites.net/customer/${customerId}`, config)
-        //     .then(response => {
-        //         console.log(response.data);
-        //         dispatch({
-        //             type: types.GOT_CUSTOMER,
-        //             customer: response.data
-        //         });
-        //     })
-        //     .catch((error) => { console.log(error) });
+        axios.get(`http://cibertecwebapi.azurewebsites.net/customer/${customerId}`, config)
+            .then(response => {
+                console.log(response.data);
+                dispatch({
+                    type: types.GOT_CUSTOMER,
+                    customer: response.data
+                });
+            })
+            .catch((error) => { console.log(error) });
     }
 }
 
-
 export function deleteCustomer(token: string, customerId: string) {
     return function (dispatch: any) {
+        let config = { headers: { Authorization: `Bearer ${token}` }};
+
+        axios.delete(`http://cibertecwebapi.azurewebsites.net/customer/${customerId}`, config)
+            .then(response => {
+                dispatch({
+                    type: types.USER_DELETED,
+                });
+            })
+            .catch((error) => { console.log(error) });
+    }
+}
+
+export function saveCustomer(token: string, customer: any) {
+    return function (dispatch: any) {
+        let config = { headers: { Authorization: `Bearer ${token}` }};
+
+        let params = new URLSearchParams();
+        params.append('firstName', customer.firstName);
+        params.append('lastName', customer.lastName);
+        params.append('city', customer.city);
+        params.append('country', customer.country);
+        params.append('phone', customer.phone);
+
+        console.log(params);
+        axios.post('http://cibertecwebapi.azurewebsites.net/customer', params, config)
+            .then(response => {
+                dispatch({
+                    type: types.USER_UPDATED,
+                    id: response.data.id
+                })
+            })
+            .catch((error) => { console.log(error) });
+
+    }
+}
+
+export function updateCustomer(token: string, customer: any) {
+    return function (dispatch: any) {
         let config = { headers: { Authorization: token }};
-            dispatch({
-                type: types.USER_DELETED
-            });
-        // axios.delete(`http://cibertecwebapi.azurewebsites.net/customer/${customerId}`, config)
-        //     .then(response => {
-        //         dispatch({
-        //             type: types.USER_DELETED,
-        //         });
-        //     })
-        //     .catch((error) => { console.log(error) });
+
+        let params = new URLSearchParams();
+        params.append('id', customer.id);
+        params.append('firstName', customer.firstName);
+        params.append('lastName', customer.lastName);
+        params.append('city', customer.city);
+        params.append('country', customer.country);
+        params.append('phone', customer.phone);
+
+        console.log(params);
+        axios.put('http://cibertecwebapi.azurewebsites.net/customer', params, config)
+            .then(response => {
+                dispatch({
+                    type: types.USER_UPDATED,
+                    id: response.data.id
+                })
+            })
+
     }
 }

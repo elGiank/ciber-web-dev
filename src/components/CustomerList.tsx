@@ -43,7 +43,7 @@ class CustomerList extends React.Component<any,any> {
                         <div className="panel panel-default panel-list text-left">
                             <div className="panel-body">
                                 <h3>Lista de clientes</h3>
-                                <table className="table table-bordered table-hover">
+                                <table className="table table-bordered table-hover table-condensed">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -72,7 +72,7 @@ class CustomerList extends React.Component<any,any> {
                                     </tbody>
                                 </table>
                                 <div className="text-right">
-                                    <button className="btn btn-primary">Agregar Cliente</button>
+                                    <Link to="/customercreate" className="btn btn-primary">Agregar Cliente</Link>
                                 </div>
                             </div>
                         </div>

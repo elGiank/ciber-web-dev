@@ -48,10 +48,10 @@ class CustomerDisplay extends React.Component<any,any> {
                                 <h3>{`Cliente ${customer.firstName} ${customer.lastName}`}</h3>
                                 <br/>
                                 <ul className="list-group">
-                                    <li className="list-group-item"><span><strong>ID</strong></span> {customer.id}</li>
-                                    <li className="list-group-item"><span><strong>Ciudad</strong></span> {customer.city}</li>
-                                    <li className="list-group-item"><span><strong>País</strong></span> {customer.country}</li>
-                                    <li className="list-group-item"><span><strong>Teléfono</strong></span> {customer.phone}</li>
+                                    <li className="list-group-item"><span><strong>ID:</strong></span> {customer.id}</li>
+                                    <li className="list-group-item"><span><strong>Ciudad:</strong></span> {customer.city}</li>
+                                    <li className="list-group-item"><span><strong>País:</strong></span> {customer.country}</li>
+                                    <li className="list-group-item"><span><strong>Teléfono:</strong></span> {customer.phone}</li>
                                 </ul>
                                 <div className="text-right">
                                     <Link className="btn btn-primary" to={`/customeredit/${customer.id}`}>Editar Cliente</Link>
