@@ -10,7 +10,7 @@ export function loginUser(email: string, password: string) {
         params.append('grant_type', 'password');
         params.append('username', email);
         params.append('password', password);
-        
+
         axios.post('http://cibertecwebapi.azurewebsites.net/token', params)
             .then(response => {
                 dispatch({
@@ -43,7 +43,6 @@ export function getCustomer(token: string, customerId: string) {
         
         axios.get(`http://cibertecwebapi.azurewebsites.net/customer/${customerId}`, config)
             .then(response => {
-                console.log(response.data);
                 dispatch({
                     type: types.GOT_CUSTOMER,
                     customer: response.data
@@ -85,13 +84,13 @@ export function saveCustomer(token: string, customer: any) {
 
 export function updateCustomer(token: string, customer: any) {
     return function (dispatch: any) {
-        let config = { headers: { Authorization: token }};
+        let config = { headers: { Authorization: `Bearer ${token}` }};
 
         axios.put('http://cibertecwebapi.azurewebsites.net/customer', customer, config)
             .then(response => {
                 dispatch({
                     type: types.USER_UPDATED,
-                    id: response.data.id
+                    id: customer.id
                 })
             })
 

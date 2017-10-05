@@ -55,8 +55,17 @@ class CustomerUpdate extends React.Component<any, ICustomerUpdateState> {
         this.props.localGetCustomer(this.props.token, this.props.params.id);
     }
 
+    componentWillReceiveProps(newProps) { 
+        this.setState({
+            firstName: newProps.customer.firstName, 
+            lastName: newProps.customer.lastName,
+            city: newProps.customer.city,
+            country: newProps.customer.country,
+            phone: newProps.customer.phone
+        });
+    }
+
     render() {
-        let {customer} = this.props;
         let {
             firstName,
             lastName,
@@ -136,8 +145,9 @@ class CustomerUpdate extends React.Component<any, ICustomerUpdateState> {
     }
 
     handleUpdateCustomer(){
-        let { token, localUpdateCustomer } = this.props
+        let { token, localUpdateCustomer, customer } = this.props
         let newCustomer = {
+            id: customer.id,
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             city: this.state.city,
