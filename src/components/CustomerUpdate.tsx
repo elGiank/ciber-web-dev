@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { saveCustomer } from '../actions/creators';
+import { getCustomer, updateCustomer } from '../actions/creators';
 import { Link } from 'react-router';
 
-interface ICustomerCreateProps extends React.Props<any>{
+interface ICustomerUpdateProps extends React.Props<any>{
     token?: string,
     localSaveCustomer?: Function
 }
 
-interface ICustomerCreateState {
+interface ICustomerUpdateState {
     firstName: string,
     lastName: string,
     city: string,
@@ -20,17 +20,19 @@ interface ICustomerCreateState {
 function mapStateToProps(state: any, ownProps: any) { 
     return {
         token: state.customerReducer.token,
+        customer: state.customerReducer.customer
     };
 }
 
 function mapDispatchToProps(dispatch: any) {
     return {
-        localSaveCustomer: bindActionCreators(saveCustomer, dispatch)
+        localGetCustomer: bindActionCreators(getCustomer, dispatch),
+        localUpdateCustomer: bindActionCreators(updateCustomer, dispatch)
     };
 }
 
-class CustomerCreate extends React.Component<any, ICustomerCreateState> {
-    constructor(props: ICustomerCreateProps) {
+class CustomerUpdate extends React.Component<any, ICustomerUpdateState> {
+    constructor(props: ICustomerUpdateProps) {
         super(props);
 
         this.state = {
@@ -46,7 +48,11 @@ class CustomerCreate extends React.Component<any, ICustomerCreateState> {
         this.handleCiudadChange = this.handleCiudadChange.bind(this);
         this.handlePaisChange = this.handlePaisChange.bind(this);
         this.handleTelefonoChange = this.handleTelefonoChange.bind(this);
-        this.handleSaveCustomer = this.handleSaveCustomer.bind(this)
+        this.handleUpdateCustomer = this.handleUpdateCustomer.bind(this)
+    }
+
+    componentDidMount(){
+        this.props.localGetCustomer(this.props.token, this.props.params.id);
     }
 
     render() {
@@ -65,7 +71,7 @@ class CustomerCreate extends React.Component<any, ICustomerCreateState> {
                     <div className="text-center">
                         <div className="panel panel-default panel-list text-left">
                             <div className="panel-body">
-                                <h3>Nuevo Cliente</h3>
+                                <h3>Modificar Cliente</h3>
                                 <br/>
                                 <div>
                                     <div className="form-group">
@@ -95,7 +101,7 @@ class CustomerCreate extends React.Component<any, ICustomerCreateState> {
                                     </div>
                                 </div>
                                 <div className="text-right">
-                                    <button className="btn btn-primary" onClick={(e)=> this.handleSaveCustomer()}>Guardar</button>
+                                    <button className="btn btn-primary" onClick={(e)=> this.handleUpdateCustomer()}>Guardar</button>
                                     &nbsp;&nbsp;&nbsp;
                                     <Link to={'/customers'} className="btn btn-danger">Cancelar</Link>
                                 </div>
@@ -129,8 +135,8 @@ class CustomerCreate extends React.Component<any, ICustomerCreateState> {
         this.setState({phone: newVal});
     }
 
-    handleSaveCustomer(){
-        let { token, localSaveCustomer } = this.props
+    handleUpdateCustomer(){
+        let { token, localUpdateCustomer } = this.props
         let newCustomer = {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
@@ -138,9 +144,9 @@ class CustomerCreate extends React.Component<any, ICustomerCreateState> {
             country: this.state.country,
             phone: this.state.phone
         };
-        localSaveCustomer(token, newCustomer);
+        localUpdateCustomer(token, newCustomer);
     }
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CustomerCreate);
+export default connect(mapStateToProps, mapDispatchToProps)(CustomerUpdate);

@@ -96,7 +96,8 @@ class Login extends React.Component<any, ILoginState> {
         this.setState({password: newVal});
     }
 
-    handleLoginUser() {
+    handleLoginUser(event: any) {
+        event.preventDefault();
         let {
             email,
             password

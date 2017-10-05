@@ -10,8 +10,7 @@ export function loginUser(email: string, password: string) {
         params.append('grant_type', 'password');
         params.append('username', email);
         params.append('password', password);
-
-        console.log(params);
+        
         axios.post('http://cibertecwebapi.azurewebsites.net/token', params)
             .then(response => {
                 dispatch({
@@ -27,9 +26,8 @@ export function getCustomerList(token: string) {
     return function (dispatch: any) {
         let config = { headers: { Authorization: `Bearer ${token}` }};
         
-        axios.get('http://cibertecwebapi.azurewebsites.net/customer/list?page=1&rows=15', config)
+        axios.get('http://cibertecwebapi.azurewebsites.net/customer/list?page=1&rows=100', config)
             .then(response => {
-                console.log(response.data);
                 dispatch({
                     type: types.GOT_CUSTOMERS,
                     customers: response.data
@@ -73,15 +71,7 @@ export function saveCustomer(token: string, customer: any) {
     return function (dispatch: any) {
         let config = { headers: { Authorization: `Bearer ${token}` }};
 
-        let params = new URLSearchParams();
-        params.append('firstName', customer.firstName);
-        params.append('lastName', customer.lastName);
-        params.append('city', customer.city);
-        params.append('country', customer.country);
-        params.append('phone', customer.phone);
-
-        console.log(params);
-        axios.post('http://cibertecwebapi.azurewebsites.net/customer', params, config)
+        axios.post('http://cibertecwebapi.azurewebsites.net/customer', customer, config)
             .then(response => {
                 dispatch({
                     type: types.USER_UPDATED,
@@ -97,16 +87,7 @@ export function updateCustomer(token: string, customer: any) {
     return function (dispatch: any) {
         let config = { headers: { Authorization: token }};
 
-        let params = new URLSearchParams();
-        params.append('id', customer.id);
-        params.append('firstName', customer.firstName);
-        params.append('lastName', customer.lastName);
-        params.append('city', customer.city);
-        params.append('country', customer.country);
-        params.append('phone', customer.phone);
-
-        console.log(params);
-        axios.put('http://cibertecwebapi.azurewebsites.net/customer', params, config)
+        axios.put('http://cibertecwebapi.azurewebsites.net/customer', customer, config)
             .then(response => {
                 dispatch({
                     type: types.USER_UPDATED,
