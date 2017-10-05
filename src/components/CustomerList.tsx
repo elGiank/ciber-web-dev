@@ -11,10 +11,15 @@ interface ICustomerListProps extends React.Props<any>{
     localGetCustomerList?: Function,
 }
 
+interface ICustomerListState {
+    page: number, 
+    pageSize: number
+};
+
 function mapStateToProps(state: any, ownProps: any) { 
     return {
         token: state.customerReducer.token,
-        customers: state.customerReducer.customers
+        customers: state.customerReducer.customers,
     };
 }
 
@@ -24,23 +29,34 @@ function mapDispatchToProps(dispatch: any) {
     };
 }
 
-class CustomerList extends React.Component<any,any> {
+class CustomerList extends React.Component<any, ICustomerListState> {
     constructor(props: ICustomerListProps) {
         super(props);
+
+        this.state = { 
+            page: 1, 
+            pageSize: 20 
+        } ;
+
+        this.handlePagePrev = this.handlePagePrev.bind(this);
+        this.handlePageNext = this.handlePageNext.bind(this);
     }
 
     componentDidMount(){
-        this.props.localGetCustomerList(this.props.token);
+        let { token } = this.props
+        let { page, pageSize } = this.state;
+        this.props.localGetCustomerList(token, page, pageSize);
     }
 
     render() {
         let {customers} = this.props;
+        let panelClassName = this.props.customers.length > 0 ? "panel-list" : "panel-list panel-list--empty"; 
         return <div className="container-fluid container-background">
             <div className="row full-height-row">
                 <div className="col-md-3 hidden-sm"></div>
                 <div className="col-sm-12 col-md-6">
                     <div className="text-center">
-                        <div className="panel panel-default panel-list text-left">
+                        <div className={`panel panel-default text-left ${panelClassName}`}>
                             <div className="panel-body">
                                 <h3>Lista de clientes</h3>
                                 <table className="table table-bordered table-hover table-condensed">
@@ -71,6 +87,14 @@ class CustomerList extends React.Component<any,any> {
                                         })}
                                     </tbody>
                                 </table>
+                                
+                                <div className="text-center">
+                                    <div className="btn-group" role="group">
+                                        <button type="button" className="btn btn-success" onClick={this.handlePagePrev}>&laquo; Anterior</button>
+                                        <button type="button" className="btn btn-success" onClick={this.handlePageNext}>Siguiente &raquo;</button>
+                                    </div>
+                                </div>
+                                
                                 <div className="text-right">
                                     <Link to="/customercreate" className="btn btn-primary">Agregar Cliente</Link>
                                 </div>
@@ -82,6 +106,29 @@ class CustomerList extends React.Component<any,any> {
             </div>
         </div>;
     };
+
+    handlePagePrev(event: any){
+        event.preventDefault();
+        let { token } = this.props
+        let { page, pageSize } = this.state
+        let newPage = page - 1 > 0 ? page - 1: page; 
+
+        this.setState({page: newPage }, () => {
+            this.props.localGetCustomerList(token, this.state.page, pageSize);
+        });
+        
+    }
+
+    handlePageNext(event: any){
+        event.preventDefault();
+        let { token } = this.props
+        let { page, pageSize } = this.state
+        let newPage = page + 1; 
+
+        this.setState({page: newPage }, () => {
+            this.props.localGetCustomerList(token, this.state.page, pageSize);
+        });
+    }
 
 }
 

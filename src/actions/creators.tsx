@@ -22,11 +22,11 @@ export function loginUser(email: string, password: string) {
     }
 }
 
-export function getCustomerList(token: string) {
+export function getCustomerList(token: string, page: number, pageSize: number) {
     return function (dispatch: any) {
         let config = { headers: { Authorization: `Bearer ${token}` }};
         
-        axios.get('http://cibertecwebapi.azurewebsites.net/customer/list?page=1&rows=100', config)
+        axios.get(`http://cibertecwebapi.azurewebsites.net/customer/list?page=${page}&rows=${pageSize}`, config)
             .then(response => {
                 dispatch({
                     type: types.GOT_CUSTOMERS,

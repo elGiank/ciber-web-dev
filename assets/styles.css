@@ -1,5 +1,5 @@
 .container-background {
-    background: url('imgs/login.jpg') no-repeat center center fixed; 
+    background: url('imgs/login.jpg') no-repeat center center fixed;
     background-size: cover;
 }
 
@@ -14,9 +14,13 @@
 }
 
 .panel-list {
-    transform: translateY(35%);
+    margin-top: 3rem;
     display: inline-block;
     width: 600px;
+}
+
+.panel-list--empty {
+    margin-top: 20rem;
 }
 
 .login-header-img {
