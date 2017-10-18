@@ -2,12 +2,12 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import 'url-search-params-polyfill';
 
-import { CustomersApp } from "./routes";
+import { Hello } from "./components/Hello";
 
 
 
 ReactDOM.render(
-    <CustomersApp />,
+    <Hello compiler="Webpack" framework="React" />,
     document.getElementById("example")
 );
 
