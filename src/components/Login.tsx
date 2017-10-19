@@ -42,11 +42,6 @@ class Login extends React.Component<any, ILoginState> {
         this.handleLoginUser = this.handleLoginUser.bind(this);
     }
 
-    componentWillReceiveProps(nextProps: any) {
-        if (nextProps.token !== '')
-            hashHistory.push('/customers');
-    }
-
     render() {
         let {
             email,
@@ -77,6 +72,7 @@ class Login extends React.Component<any, ILoginState> {
                                     </div>
                                     <button className="btn btn-primary btn-block" onClick={this.handleLoginUser}>Entrar</button>
                                 </form>
+                                <p className="login-token-preview">{this.props.token}</p>
                             </div>
                         </div>
                     </div>        
