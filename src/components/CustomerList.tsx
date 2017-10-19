@@ -94,10 +94,6 @@ class CustomerList extends React.Component<any, ICustomerListState> {
                                         <button type="button" className="btn btn-success" onClick={this.handlePageNext}>Siguiente &raquo;</button>
                                     </div>
                                 </div>
-                                
-                                <div className="text-right">
-                                    <Link to="/customercreate" className="btn btn-primary">Agregar Cliente</Link>
-                                </div>
                             </div>
                         </div>
                     </div>
